@@ -52,7 +52,7 @@ class NetworkController extends Controller
         ]);
     
         // Seleccionar la tabla adecuada según el IP_ID
-        if ($validatedData['IP_ID'] < 100) {
+        if ($validatedData['IP_ID'] > 100) {
             $network = Network::findOrFail($validatedData['IP_ID']);
         } else {
             $network = Network212::findOrFail($validatedData['IP_ID']);

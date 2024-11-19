@@ -68,14 +68,27 @@
         </table>
     </div>
 
-    <!-- Modal en index.blade.php -->
+    <!-- Espacio del modal en index -->
     <div id="modal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden">
         <div class="bg-white p-8 rounded-lg shadow-lg">
             <div id="modal-content"></div>
         </div>
     </div>
+    
+    <!-- Modifica los campos en blanco cuando STATUS es FREE -->
+    <script>
+        function handleStatusChange() {
+            const statusSelect = document.getElementById('STATUS');
+            if (statusSelect.value === 'FREE') {
+                const fieldsToClear = ['INNO', 'PROJECT', 'AREA', 'PROCESS', 'TYPE'];
+                fieldsToClear.forEach(fieldId => {
+                    document.getElementById(fieldId).value = '';
+                });
+            }
+        }
+    </script>
 
-
+    <!-- Generacion y accionar del modal para update de datos IP -->
     <script>
         const loggedInUserName = '{{ Auth::user()->name }}';
 
@@ -94,15 +107,15 @@
                         ${thirdOctet === '212' ? `
                         <div class="w-full sm:w-1/2 px-2 mb-4">
                             <label for="NO_EMPLOYEE" class="block text-gray-700">No. Employee</label>
-                            <input type="text" name="NO_EMPLOYEE" id="NO_EMPLOYEE" value="${ip.NO_EMPLOYEE}" class="w-full p-2 border border-gray-300 rounded-lg">
+                            <input type="text" name="NO_EMPLOYEE" id="NO_EMPLOYEE" value="${ip.NO_EMPLOYEE || ''}" class="w-full p-2 border border-gray-300 rounded-lg">
                         </div>
                         <div class="w-full sm:w-1/2 px-2 mb-4">
                             <label for="NAME" class="block text-gray-700">Name</label>
-                            <input type="text" name="NAME" id="NAME" value="${ip.NAME}" class="w-full p-2 border border-gray-300 rounded-lg">
+                            <input type="text" name="NAME" id="NAME" value="${ip.NAME || ''}" class="w-full p-2 border border-gray-300 rounded-lg">
                         </div>` : ''}
                         <div class="w-full sm:w-1/2 px-2 mb-4">
                             <label for="STATUS" class="block text-gray-700">Status</label>
-                            <select name="STATUS" id="STATUS" class="w-full p-2 border border-gray-300 rounded-lg">
+                            <select name="STATUS" id="STATUS" class="w-full p-2 border border-gray-300 rounded-lg" onchange="handleStatusChange()">
                                 <option value="FREE" ${ip.STATUS == 'FREE' ? 'selected' : ''}>FREE</option>
                                 <option value="IN USE" ${ip.STATUS == 'IN USE' ? 'selected' : ''}>IN USE</option>
                                 <option value="REQUESTED" ${ip.STATUS == 'REQUESTED' ? 'selected' : ''}>REQUESTED</option>
@@ -110,27 +123,27 @@
                         </div>
                         <div class="w-full sm:w-1/2 px-2 mb-4">
                             <label for="INNO" class="block text-gray-700">Inno</label>
-                            <input type="text" name="INNO" id="INNO" value="${ip.INNO}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
+                            <input type="text" name="INNO" id="INNO" value="${ip.INNO || ''}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
                         </div>
                         <div class="w-full sm:w-1/2 px-2 mb-4">
                             <label for="PROJECT" class="block text-gray-700">Project</label>
-                            <input type="text" name="PROJECT" id="PROJECT" value="${ip.PROJECT}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
+                            <input type="text" name="PROJECT" id="PROJECT" value="${ip.PROJECT || ''}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
                         </div>
                         <div class="w-full sm:w-1/2 px-2 mb-4">
                             <label for="AREA" class="block text-gray-700">Area</label>
-                            <input type="text" name="AREA" id="AREA" value="${ip.AREA}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
+                            <input type="text" name="AREA" id="AREA" value="${ip.AREA || ''}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
                         </div>
                         <div class="w-full sm:w-1/2 px-2 mb-4">
                             <label for="PROCESS" class="block text-gray-700">Process</label>
-                            <input type="text" name="PROCESS" id="PROCESS" value="${ip.PROCESS}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
+                            <input type="text" name="PROCESS" id="PROCESS" value="${ip.PROCESS || ''}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
                         </div>
                         <div class="w-full sm:w-1/2 px-2 mb-4">
                             <label for="TYPE" class="block text-gray-700">Type</label>
-                            <input type="text" name="TYPE" id="TYPE" value="${ip.TYPE}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
+                            <input type="text" name="TYPE" id="TYPE" value="${ip.TYPE || ''}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
                         </div>
                         <div class="w-full sm:w-1/2 px-2 mb-4">
                             <label for="PERSON_IN_CHARGE" class="block text-gray-700">Person In Charge</label>
-                            <input type="text" name="PERSON_IN_CHARGE" id="PERSON_IN_CHARGE" value="${loggedInUserName}" class="w-full p-2 border border-gray-300 rounded-lg" readonly>
+                            <input type="text" name="PERSON_IN_CHARGE" id="PERSON_IN_CHARGE" value="${loggedInUserName || ''}" class="w-full p-2 border border-gray-300 rounded-lg" readonly>
                         </div>
                     </div>
                     <div class="flex justify-center">
@@ -142,8 +155,6 @@
 
             document.getElementById('modal').classList.remove('hidden');
         }
-
-
 
         function closeModal() {
             document.getElementById('modal').classList.add('hidden');
