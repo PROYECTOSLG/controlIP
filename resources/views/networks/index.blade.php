@@ -10,6 +10,9 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex justify-between items-center bg-white p-4 shadow-md">
+        <a href="{{ route('dashboard') }}">
+            <img src="{{ asset('images/back.png') }}" alt="Logo" class="w-4">
+        </a>
         <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-32">
         <form action="{{ route('logout') }}" method="POST">
             @csrf
@@ -69,7 +72,6 @@
     <div id="modal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden">
         <div class="bg-white p-8 rounded-lg shadow-lg">
             <div id="modal-content"></div>
-            <button onclick="closeModal()" class="ml-2 bg-red-500 text-white px-4 py-2 rounded-lg mt-4">Close</button>
         </div>
     </div>
 
@@ -77,93 +79,75 @@
     <script>
         const loggedInUserName = '{{ Auth::user()->name }}';
 
-        function showIpDetails(ip) {
+        function showIpDetails(ip) 
+        {
+            const network = "{{ $network }}";
+            const thirdOctet = ip.IP.split('.')[2]; // Extrae el tercer octeto de la IP
+
             document.getElementById('modal-content').innerHTML = ` 
-                <h2 class="text-xl font-bold mb-4">Detalles de la IP: ${ip.IP}</h2> 
+                <h2 class="text-xl font-bold mb-4">IP Details: ${ip.IP}</h2> 
                 <form id="ip-details-form" action="{{ route('network.update') }}" method="POST"> 
                     @csrf 
                     <input type="hidden" name="IP_ID" value="${ip.id}"> 
-                    <input type="hidden" name="network" value="{{ $network }}">
-                    ${ip.NO_EMPLOYEE ? `
-                    <div class="mb-4">
-                        <label for="NO_EMPLOYEE" class="block text-gray-700">No. Employee</label>
-                        <input type="text" name="NO_EMPLOYEE" id="NO_EMPLOYEE" value="${ip.NO_EMPLOYEE}" class="w-full p-2 border border-gray-300 rounded-lg">
+                    <input type="hidden" name="network" value="${network}">
+                    <div class="flex flex-wrap -mx-2">
+                        ${thirdOctet === '212' ? `
+                        <div class="w-full sm:w-1/2 px-2 mb-4">
+                            <label for="NO_EMPLOYEE" class="block text-gray-700">No. Employee</label>
+                            <input type="text" name="NO_EMPLOYEE" id="NO_EMPLOYEE" value="${ip.NO_EMPLOYEE}" class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div class="w-full sm:w-1/2 px-2 mb-4">
+                            <label for="NAME" class="block text-gray-700">Name</label>
+                            <input type="text" name="NAME" id="NAME" value="${ip.NAME}" class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>` : ''}
+                        <div class="w-full sm:w-1/2 px-2 mb-4">
+                            <label for="STATUS" class="block text-gray-700">Status</label>
+                            <select name="STATUS" id="STATUS" class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="FREE" ${ip.STATUS == 'FREE' ? 'selected' : ''}>FREE</option>
+                                <option value="IN USE" ${ip.STATUS == 'IN USE' ? 'selected' : ''}>IN USE</option>
+                                <option value="REQUESTED" ${ip.STATUS == 'REQUESTED' ? 'selected' : ''}>REQUESTED</option>
+                            </select>
+                        </div>
+                        <div class="w-full sm:w-1/2 px-2 mb-4">
+                            <label for="INNO" class="block text-gray-700">Inno</label>
+                            <input type="text" name="INNO" id="INNO" value="${ip.INNO}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
+                        </div>
+                        <div class="w-full sm:w-1/2 px-2 mb-4">
+                            <label for="PROJECT" class="block text-gray-700">Project</label>
+                            <input type="text" name="PROJECT" id="PROJECT" value="${ip.PROJECT}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
+                        </div>
+                        <div class="w-full sm:w-1/2 px-2 mb-4">
+                            <label for="AREA" class="block text-gray-700">Area</label>
+                            <input type="text" name="AREA" id="AREA" value="${ip.AREA}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
+                        </div>
+                        <div class="w-full sm:w-1/2 px-2 mb-4">
+                            <label for="PROCESS" class="block text-gray-700">Process</label>
+                            <input type="text" name="PROCESS" id="PROCESS" value="${ip.PROCESS}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
+                        </div>
+                        <div class="w-full sm:w-1/2 px-2 mb-4">
+                            <label for="TYPE" class="block text-gray-700">Type</label>
+                            <input type="text" name="TYPE" id="TYPE" value="${ip.TYPE}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
+                        </div>
+                        <div class="w-full sm:w-1/2 px-2 mb-4">
+                            <label for="PERSON_IN_CHARGE" class="block text-gray-700">Person In Charge</label>
+                            <input type="text" name="PERSON_IN_CHARGE" id="PERSON_IN_CHARGE" value="${loggedInUserName}" class="w-full p-2 border border-gray-300 rounded-lg" readonly>
+                        </div>
                     </div>
-                    <div class="mb-4">
-                        <label for="NAME" class="block text-gray-700">Name</label>
-                        <input type="text" name="NAME" id="NAME" value="${ip.NAME}" class="w-full p-2 border border-gray-300 rounded-lg">
-                    </div>` : ''}
-                    <div class="mb-4">
-                        <label for="STATUS" class="block text-gray-700">Status</label>
-                        <select name="STATUS" id="STATUS" class="w-full p-2 border border-gray-300 rounded-lg">
-                            <option value="FREE" ${ip.STATUS == 'FREE' ? 'selected' : ''}>FREE</option>
-                            <option value="IN USE" ${ip.STATUS == 'IN USE' ? 'selected' : ''}>IN USE</option>
-                            <option value="REQUESTED" ${ip.STATUS == 'REQUESTED' ? 'selected' : ''}>REQUESTED</option>
-                        </select>
-                    </div>
-                    <div class="mb-4">
-                        <label for="INNO" class="block text-gray-700">Inno</label>
-                        <input type="text" name="INNO" id="INNO" value="${ip.INNO}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
-                    </div>
-                    <div class="mb-4">
-                        <label for="PROJECT" class="block text-gray-700">Project</label>
-                        <input type="text" name="PROJECT" id="PROJECT" value="${ip.PROJECT}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
-                    </div>
-                    <div class="mb-4">
-                        <label for="AREA" class="block text-gray-700">Area</label>
-                        <input type="text" name="AREA" id="AREA" value="${ip.AREA}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
-                    </div>
-                    <div class="mb-4">
-                        <label for="PROCESS" class="block text-gray-700">Process</label>
-                        <input type="text" name="PROCESS" id="PROCESS" value="${ip.PROCESS}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
-                    </div>
-                    <div class="mb-4">
-                        <label for="TYPE" class="block text-gray-700">Type</label>
-                        <input type="text" name="TYPE" id="TYPE" value="${ip.TYPE}" class="w-full p-2 border border-gray-300 rounded-lg uppercase">
-                    </div>
-                    <div class="mb-4">
-                        <label for="PERSON_IN_CHARGE" class="block text-gray-700">Person In Charge</label>
-                        <input type="text" name="PERSON_IN_CHARGE" id="PERSON_IN_CHARGE" value="${loggedInUserName}" class="w-full p-2 border border-gray-300 rounded-lg" readonly>
-                    </div>
-                    <div class="flex justify-end">
+                    <div class="flex justify-center">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Modify</button>
                         <button type="button" onclick="closeModal()" class="ml-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">Cancel</button>
                     </div>
                 </form>
             `;
+
             document.getElementById('modal').classList.remove('hidden');
         }
+
 
 
         function closeModal() {
             document.getElementById('modal').classList.add('hidden');
         }
-
-        /*function handleIpUpdate(event) {
-            event.preventDefault();
-            var form = document.getElementById('ip-details-form');
-
-            // Recopilar los datos del formulario
-            var formData = {
-                IP_ID: form.IP_ID.value,
-                NO_EMPLOYEE: form.NO_EMPLOYEE ? form.NO_EMPLOYEE.value : null,
-                NAME: form.NAME ? form.NAME.value : null,
-                STATUS: form.STATUS.value,
-                INNO: form.INNO.value,
-                PROJECT: form.PROJECT.value,
-                AREA: form.AREA.value,
-                PROCESS: form.PROCESS.value,
-                TYPE: form.TYPE.value,
-                PERSON_IN_CHARGE: form.PERSON_IN_CHARGE.value,
-            };
-
-            console.log('Datos a enviar:', formData);
-
-            document.getElementById('ip-details-form').submit(); // Envía el formulario directamente
-        }*/
-
-
-
     </script>
 </body>
 </html>

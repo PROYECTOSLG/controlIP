@@ -15,7 +15,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware('auth');
+})->middleware('auth')->name('dashboard');
+
 
 // Ruta fija para la vista de la tabla
 Route::get('/networks', [NetworkController::class, 'index'])->name('networks.index')->middleware('auth');

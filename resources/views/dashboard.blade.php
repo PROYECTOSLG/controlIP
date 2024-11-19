@@ -8,6 +8,7 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex justify-between items-center bg-white p-4 shadow-md">
+        <div style="width: 16px; height: 16px; background-color: white;"></div>
         <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-32">
         <form action="{{ route('logout') }}" method="POST">
             @csrf
@@ -19,37 +20,39 @@
     </div>
 
     <div class="p-6 flex flex-col items-center">
-        <div class="bg-white p-6 rounded-lg shadow-lg mb-6 w-1/2">
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-6 w-3/4">
             <h2 class="text-2xl font-bold flex items-center justify-center mb-4">
                 <img src="{{ asset('images/networks.png') }}" alt="Networks" class="w-6 mr-2">
                 Networks
             </h2>
-            <div class="flex flex-wrap justify-center space-x-4">
-            <form action="{{ route('networks.setNetwork') }}" method="POST"> 
-                @csrf <input type="hidden" name="network" value="52"> 
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none mb-2">Network 52</button> 
-            </form> 
-            <form action="{{ route('networks.setNetwork') }}" method="POST">
-                @csrf 
-                <input type="hidden" name="network" value="53"> 
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none mb-2">Network 53</button> 
-            </form> 
-            <form action="{{ route('networks.setNetwork') }}" method="POST"> 
-                @csrf 
-                <input type="hidden" name="network" value="57"> 
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none mb-2">Network 57</button> 
-            </form> 
-            <form action="{{ route('networks.setNetwork') }}" method="POST"> 
-                @csrf 
-                <input type="hidden" name="network" value="212"> 
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none mb-2">Network 212</button> 
-            </form> 
-            <form action="{{ route('networks.setNetwork') }}" method="POST"> 
-                @csrf 
-                <input type="hidden" name="network" value="215"> 
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none mb-2">Network 215</button> 
-            </form>
+            <div class="flex flex-wrap justify-center">
+                <form action="{{ route('networks.setNetwork') }}" method="POST" class="px-4">
+                    @csrf
+                    <input type="hidden" name="network" value="52">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none mb-2" style="width: 123px; height: 48px;">Network 52</button>
+                </form>
+                <form action="{{ route('networks.setNetwork') }}" method="POST" class="px-5">
+                    @csrf
+                    <input type="hidden" name="network" value="53">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none mb-2" style="width: 123px; height: 48px;">Network 53</button>
+                </form>
+                <form action="{{ route('networks.setNetwork') }}" method="POST" class="px-5">
+                    @csrf
+                    <input type="hidden" name="network" value="57">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none mb-2" style="width: 123px; height: 48px;">Network 57</button>
+                </form>
+                <form action="{{ route('networks.setNetwork') }}" method="POST" class="px-5">
+                    @csrf
+                    <input type="hidden" name="network" value="212">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none mb-2" style="width: 123px; height: 48px;">Network 212</button>
+                </form>
+                <form action="{{ route('networks.setNetwork') }}" method="POST" class="px-5">
+                    @csrf
+                    <input type="hidden" name="network" value="215">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none mb-2" style="width: 123px; height: 48px;">Network 215</button>
+                </form>
             </div>
+
         </div>
         <div class="bg-white p-6 rounded-lg shadow-lg w-1/2">
             <h2 class="text-2xl font-bold flex items-center justify-center mb-4">
