@@ -54,14 +54,54 @@
             </div>
 
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-lg w-1/2">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-3/4">
             <h2 class="text-2xl font-bold flex items-center justify-center mb-4">
                 <img src="{{ asset('images/views.png') }}" alt="Views" class="w-6 mr-2">
                 Views
             </h2>
-            <div class="flex flex-wrap justify-center space-x-4">
-                <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 focus:outline-none mb-2">GENERAL</button>
-                <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 focus:outline-none mb-2">PRODUCTION</button>
+            <div class="overflow-x-auto">
+                <table class="w-1/3 bg-white text-center">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b bg-blue-500 text-white">VLAN</th>
+                            <th class="py-2 px-4 border-b bg-blue-500 text-white">NETWORK</th>
+                            <th class="py-2 px-4 border-b bg-blue-500 text-white">USE</th>
+                            <th class="py-2 px-4 border-b bg-blue-500 text-white">FREE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border-b">Network 52</td>
+                            <td class="py-2 px-4 border-b">FA</td>
+                            <td class="py-2 px-4 border-b"></td>
+                            <td class="py-2 px-4 border-b"></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b">Network 53</td>
+                            <td class="py-2 px-4 border-b">FA</td>
+                            <td class="py-2 px-4 border-b"></td>
+                            <td class="py-2 px-4 border-b"></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b">Network 57</td>
+                            <td class="py-2 px-4 border-b">FA-OA</td>
+                            <td class="py-2 px-4 border-b"></td>
+                            <td class="py-2 px-4 border-b"></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b">Network 212</td>
+                            <td class="py-2 px-4 border-b">OA</td>
+                            <td class="py-2 px-4 border-b"></td>
+                            <td class="py-2 px-4 border-b"></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b">Network 215</td>
+                            <td class="py-2 px-4 border-b">FA</td>
+                            <td class="py-2 px-4 border-b"></td>
+                            <td class="py-2 px-4 border-b"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

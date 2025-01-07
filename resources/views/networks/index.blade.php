@@ -21,6 +21,20 @@
     </style>
 </head>
 <body class="bg-gray-100">
+    <div class="flex justify-between items-center bg-white p-4 shadow-md">
+        <a href="{{ route('dashboard') }}">
+            <img src="{{ asset('images/back.png') }}" alt="Logo" class="w-4">
+        </a>
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-32">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="flex items-center bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none">
+                <img src="{{ asset('images/logout.png') }}" alt="Logout" class="w-6 mr-2">
+                Log out
+            </button>
+        </form>
+    </div>
+
     <!-- ESPACIO DE TOP BAR-->
     <div class="container mx-auto p-8">
         <h1 class="text-2xl font-bold flex items-center justify-center mb-4">NETWORK {{ $network }}</h1>

@@ -8,6 +8,14 @@ use App\Models\Network212;
 
 class NetworkController extends Controller
 {
+    public function menu(Request $request)
+    {
+        $totalCount = Network212::count();
+        $freeCount = Network212::where('STATUS', 'FREE')->count();
+        $inUseCount = Network212::where('STATUS', 'IN USE')->count();
+
+        return view('dashboard', compact('totalCount', 'freeCount', 'inUseCount'));
+    }
     public function index(Request $request)
     {
         $network = $request->session()->get('network', '52'); // Valor por defecto

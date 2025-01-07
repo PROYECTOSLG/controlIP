@@ -18,8 +18,8 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard');
+        if (Auth::attempt($credentials)) { 
+            return redirect()->route('dashboard.menu'); 
         }
 
         return back()->withErrors([

@@ -13,10 +13,10 @@ Route::post('/change-password', [AuthController::class, 'changePassword'])->name
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware('auth')->name('dashboard');
-
+})->middleware('auth')->name('dashboard');*/
+Route::get('/dashboard', [NetworkController::class, 'menu'])->name('dashboard.menu')->middleware('auth');
 
 // Ruta fija para la vista de la tabla
 Route::get('/networks', [NetworkController::class, 'index'])->name('networks.index')->middleware('auth');
